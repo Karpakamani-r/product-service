@@ -2,11 +2,15 @@ package com.w2c.products.services;
 
 import com.w2c.products.config.exceptions.ProductNotFoundException;
 import com.w2c.products.config.exceptions.UnknownException;
+import com.w2c.products.dto.BaseResponse;
 import com.w2c.products.dto.ProductDto;
+import com.w2c.products.dto.ProductRequestDto;
 import com.w2c.products.dto.ProductResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 import static com.w2c.products.util.Constants.*;
 
@@ -19,7 +23,7 @@ public class ProductServiceRemoteImpl implements ProductService {
     public ProductResponseDto getProductById(long id) {
         ProductDto productDto;
         try {
-            productDto = restTemplate.getForObject(BASE_URL + ENDPOINT_PRODUCTS + id, ProductDto.class);
+            productDto = restTemplate.getForObject(ENDPOINT_PRODUCTS + id, ProductDto.class);
         } catch (Exception e) {
             throw new UnknownException("Unknown error is occurred");
         }
@@ -28,15 +32,23 @@ public class ProductServiceRemoteImpl implements ProductService {
     }
 
     private ProductResponseDto getProductResponseFromDto(ProductDto productDto) {
-        ProductResponseDto response = new ProductResponseDto();
-        response.setProductId(productDto.getId());
-        response.setProductName(productDto.getTitle());
-        response.setPrice(productDto.getPrice());
-        response.setImage(productDto.getImage());
-        response.setCategory(productDto.getCategory());
-        response.setDescription(productDto.getDescription());
-        response.setStatusCode(200);
-        response.setMessage("Success");
-        return response;
+        return ProductResponseDto.builder()
+                .productId(productDto.getId())
+                .productName(productDto.getTitle())
+                .price(productDto.getPrice())
+                .image(productDto.getImage())
+                .category(productDto.getCategory())
+                .description(productDto.getDescription())
+                .build();
+    }
+
+    @Override
+    public List<ProductResponseDto> getAllProducts() {
+        return null;
+    }
+
+    @Override
+    public BaseResponse insertNewProduct(ProductRequestDto product) {
+        return null;
     }
 }

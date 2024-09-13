@@ -1,9 +1,11 @@
 package com.w2c.products.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class ProductResponseDto extends BaseResponse {
+@Builder
+public class ProductResponseDto {
     private long productId;
     private String productName;
     private Double price;

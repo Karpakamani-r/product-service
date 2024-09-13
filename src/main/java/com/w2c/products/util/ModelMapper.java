@@ -2,21 +2,18 @@ package com.w2c.products.util;
 
 import com.w2c.products.dto.ProductResponseDto;
 import com.w2c.products.model.Product;
-import com.w2c.products.model.Rating;
 
 public class ModelMapper {
 
     public static ProductResponseDto getProductResponseFromProduct(Product product) {
-        ProductResponseDto responseDto = new ProductResponseDto();
-        responseDto.setProductId(product.getProductId());
-        responseDto.setProductName(product.getName());
-        responseDto.setDescription(product.getDescription());
-        responseDto.setMessage("Success");
-        responseDto.setStatusCode(200);
-        responseDto.setCategory(product.getCategory());
-        responseDto.setPrice(product.getPrice());
-        responseDto.setImage(product.getImage());
-        return responseDto;
+        return ProductResponseDto.builder()
+                .productId(product.getProductId())
+                .productName(product.getName())
+                .description(product.getDescription())
+                .category(product.getCategory())
+                .price(product.getPrice())
+                .image(product.getImage())
+                .build();
     }
 
     public static Product getProductFromResponse(ProductResponseDto productDto) {
