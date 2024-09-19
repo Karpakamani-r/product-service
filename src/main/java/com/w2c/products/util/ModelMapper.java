@@ -7,7 +7,7 @@ public class ModelMapper {
 
     public static ProductResponseDto getProductResponseFromProduct(Product product) {
         return ProductResponseDto.builder()
-                .productId(product.getProductId())
+                .productId(product.getId())
                 .productName(product.getName())
                 .description(product.getDescription())
                 .category(product.getCategory())
