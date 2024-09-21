@@ -21,9 +21,6 @@ import static com.w2c.products.util.Constants.QUALIFIER_DB_PRODUCTS;
 @RestController
 @RequestMapping("products")
 public class ProductController {
-    /*  @Qualifier(value = QUALIFIER_REMOTE_PRODUCTS)
-        @Autowired
-        private ProductService productService;*/
     @Qualifier(value = QUALIFIER_DB_PRODUCTS)
     @Autowired
     private ProductService productService;
