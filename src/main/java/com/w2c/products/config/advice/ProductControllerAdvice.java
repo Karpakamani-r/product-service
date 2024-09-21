@@ -1,10 +1,11 @@
 package com.w2c.products.config.advice;
 
+import com.w2c.products.config.exceptions.ProductAlreadyExistException;
 import com.w2c.products.config.exceptions.ProductNotFoundException;
 import com.w2c.products.config.exceptions.UnknownException;
 import com.w2c.products.config.exceptions.UserNotFoundException;
 import com.w2c.products.config.response.APIResponse;
-import com.w2c.products.config.response.ResponseService;
+import com.w2c.products.config.response.ResponseHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ProductControllerAdvice {
 
     @Autowired
-    private ResponseService service;
+    private ResponseHandler service;
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<APIResponse<Object>> provideUserNotFoundException(UserNotFoundException e) {
@@ -30,5 +31,10 @@ public class ProductControllerAdvice {
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<APIResponse<Object>> provideProductNotFoundException(ProductNotFoundException e) {
         return service.onError(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ProductAlreadyExistException.class)
+    public ResponseEntity<APIResponse<Object>> provideProductNotFoundException(ProductAlreadyExistException e) {
+        return service.onError(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
